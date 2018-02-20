@@ -1,1 +1,1 @@
-Movies
+A simple TMDb database client
