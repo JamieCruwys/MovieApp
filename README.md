@@ -1,22 +1,14 @@
-# Header sizes
-## Smaller header
-### Even smaller header
+# H1
+## H2
+### H3
+#### H4
+##### H5
+###### H6
 
-Paragraphs are obviously supported along with all the fancy text styling you could want.
-There is *italic*, **bold** and ***bold italic***. Even links are supported, visit the
-github page for Bypass [here](https://github.com/Uncodin/bypass).
+Alternatively, for H1 and H2, an underline-ish style:
 
-* Nested List
-	* One
-	* Two
-	* Three
-* One
-	* One
-	* Two
-	* Three
+Alt-H1
+======
 
-## Code Block Support
-
-    const char* str;
-    str = env->GetStringUTFChars(markdown, NULL);
-			
+Alt-H2
+------
