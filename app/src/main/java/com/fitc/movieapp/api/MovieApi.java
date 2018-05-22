@@ -1,5 +1,7 @@
 package com.fitc.movieapp.api;
 
+import com.fitc.movieapp.model.MovieResponse;
+
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.GET;

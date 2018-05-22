@@ -1,4 +1,4 @@
-package com.fitc.movieapp.api;
+package com.fitc.movieapp.model;
 
 import java.util.ArrayList;
 import java.util.List;

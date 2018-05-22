@@ -2,7 +2,6 @@ package com.fitc.movieapp;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,13 +18,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fitc.movieapp.api.Client;
-import com.fitc.movieapp.api.Movie;
+import com.fitc.movieapp.model.Movie;
 import com.fitc.movieapp.api.MovieApi;
-import com.fitc.movieapp.api.MovieResponse;
+import com.fitc.movieapp.model.MovieResponse;
 
 import java.util.List;
 
@@ -33,7 +31,6 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.fitc.movieapp.api.Movie;
+import com.fitc.movieapp.model.Movie;
 
 import java.util.ArrayList;
 import java.util.List;
