@@ -19,21 +19,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fitc.movieapp.api.Client;
-import com.fitc.movieapp.api.Movie;
+import com.fitc.movieapp.model.Movie;
 import com.fitc.movieapp.api.MovieApi;
-import com.fitc.movieapp.api.MovieResponse;
+import com.fitc.movieapp.model.MovieResponse;
+import com.fitc.movieapp.repo.MovieRepo;
 
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -116,19 +116,12 @@ public class MainActivity extends AppCompatActivity {
             adapter = new Adapter(R.layout.movie_item, this.getActivity().getApplicationContext());
             recyclerView.setAdapter(adapter);
 
-            MovieApi movieApi =
-                    Client.getClient().create(MovieApi.class);
-
-            Observable<Response<MovieResponse>> movieRequest = movieApi.getTopRated(API_KEY_V3);
-            movieRequest.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(httpResponse -> {
-                        if (httpResponse.isSuccessful()) {
-                            List<Movie> movies = httpResponse.body().results;
-                            adapter.setData(movies);
-                        }
-                    }, error -> {
-                        Toast.makeText(this.getActivity(), "Failed to load data", Toast.LENGTH_LONG);
-                    });
+	        Observable<List<Movie>> topRatedMovies = MovieRepo.INSTANCE.getTopRatedMovies();
+	        topRatedMovies.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+			        .subscribe(movies -> adapter.setData(movies), error -> {
+			        	adapter.setData(Collections.emptyList());
+				        Snackbar.make(recyclerView, "Error getting top rated movies. Maybe they aren't so good?", Snackbar.LENGTH_SHORT).show();
+			        });
 
             return rootView;
         }

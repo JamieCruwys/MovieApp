@@ -6,8 +6,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Client {
-    public static final String BASE_URL = "http://api.themoviedb.org/3/";
-    private static Retrofit retrofit = null;
+    private static final String BASE_URL = "http://api.themoviedb.org/3/";
+    private static Retrofit retrofit;
 
     public static Retrofit getClient() {
         if (retrofit == null) {
