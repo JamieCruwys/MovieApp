@@ -2,6 +2,7 @@ package com.fitc.movieapp;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,7 +25,9 @@ import com.fitc.movieapp.api.Client;
 import com.fitc.movieapp.model.Movie;
 import com.fitc.movieapp.api.MovieApi;
 import com.fitc.movieapp.model.MovieResponse;
+import com.fitc.movieapp.repo.MovieRepo;
 
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -113,19 +116,12 @@ public class MainActivity extends AppCompatActivity {
             adapter = new Adapter(R.layout.movie_item, this.getActivity().getApplicationContext());
             recyclerView.setAdapter(adapter);
 
-            MovieApi movieApi =
-                    Client.getClient().create(MovieApi.class);
-
-            Observable<Response<MovieResponse>> movieRequest = movieApi.getTopRated(API_KEY_V3);
-            movieRequest.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(httpResponse -> {
-                        if (httpResponse.isSuccessful()) {
-                            List<Movie> movies = httpResponse.body().results;
-                            adapter.setData(movies);
-                        }
-                    }, error -> {
-                        Toast.makeText(this.getActivity(), "Failed to load data", Toast.LENGTH_LONG);
-                    });
+	        Observable<List<Movie>> topRatedMovies = MovieRepo.INSTANCE.getTopRatedMovies();
+	        topRatedMovies.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+			        .subscribe(movies -> adapter.setData(movies), error -> {
+			        	adapter.setData(Collections.emptyList());
+				        Snackbar.make(recyclerView, "Error getting top rated movies. Maybe they aren't so good?", Snackbar.LENGTH_SHORT).show();
+			        });
 
             return rootView;
         }
